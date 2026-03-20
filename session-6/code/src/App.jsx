@@ -1,4 +1,11 @@
-import React, { Suspense, use, useCallback, useEffect, useState } from "react";
+import React, {
+  Suspense,
+  use,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { fetchProducts } from "./services/productServices";
 import SearchBar from "./components/SearchBar";
 import ProductList from "./components/ProductList";
@@ -38,11 +45,13 @@ const App = () => {
     });
   }, []);
 
-  const filterProducts = products.filter((product) => {
-    return product.title
-      .toLowerCase()
-      .includes(debounceSearchValue.toLowerCase());
-  });
+  const filterProducts = useMemo(() => {
+    return products.filter((product) => {
+      return product.title
+        .toLowerCase()
+        .includes(debounceSearchValue.toLowerCase());
+    });
+  }, [debounceSearchValue]);
 
   if (loading) return <p>Loading Products....</p>;
 

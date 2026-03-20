@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useMemo } from "react";
 
 const Cart = ({ cart }) => {
-  const total = cart.reduce((sum, total) => {
-    return sum + total.price;
-  }, 0);
+  
+  const total = useMemo(() => {
+    return cart.reduce((sum, total) => {
+      console.log("hello");
+      return sum + total.price;
+    }, 0);
+  }, [cart]);
 
   return (
     <div style={{ flex: 1, borderLeft: "2px solid gray", padding: "10px" }}>
